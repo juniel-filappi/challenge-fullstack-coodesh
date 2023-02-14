@@ -1,17 +1,75 @@
 import { Layout } from "@/components/Layout";
+import { Modal } from "@/components/Modal";
 import { TableUploads } from "@/components/TableUploads";
-import { IApiResponse } from "@/interfaces/IApiResponse";
 import { IUpload } from "@/interfaces/IUpload";
-import { getAPIClient } from "@/utils/axios";
-import { GetServerSideProps } from "next";
+import { getUploads, postUpload } from "@/services/upload";
+import { handleError } from "@/utils/error";
+import { handleSuccess } from "@/utils/success";
+import { useEffect, useState } from "react";
 
-interface DashboardProps {
-  uploads: IUpload[];
-}
+export default function Dashboard() {
+  const [uploads, setUploads] = useState<IUpload[]>([]);
+  const [isOpen, setIsOpen] = useState(true);
+  const [file, setFile] = useState<FileList | null>(null);
 
-export default function Dashboard({ uploads }: DashboardProps) {
+  useEffect(() => {
+    async function getUploadsData() {
+      try {
+        const request = await getUploads();
+        setUploads(request.payload);
+      } catch (error) {
+        handleError(error, "Erro ao buscar dados de uploads");
+      }
+    }
+
+    getUploadsData();
+  }, []);
+
+  const closeModal = () => {
+    setIsOpen(false);
+  };
+  const openModal = () => {
+    setIsOpen(true);
+  };
+
+  const handleFileUpload = async () => {
+    try {
+      if (!file) {
+        throw new Error("Nenhum arquivo selecionado");
+      }
+      const request = await postUpload(file[0]);
+
+      if (request) {
+        closeModal();
+        handleSuccess("Upload realizado com sucesso");
+        // refresh data 
+        const request = await getUploads();
+        setUploads(request.payload);
+      }
+    } catch (error) {
+      handleError(error, "Erro ao fazer upload do arquivo");
+    }
+  };
+
   return (
     <Layout title="Dashboard">
+      <Modal header="Upload de Vendas" isOpen={isOpen} onClose={closeModal}>
+        <div className="mt-10 flex flex-col"> 
+          <input
+            type="file"
+            accept=".txt"
+            onChange={(e) => setFile(e.target.files)}
+          />
+
+          <button
+            className="bg-blue-500 rounded py-2 px-4 text-white mt-10 hover:brightness-90  transition-all duration-150 disabled:brightness-90"
+            onClick={handleFileUpload}
+            disabled={!file}
+          >
+            Enviar
+          </button>
+        </div>
+      </Modal>
       <div className="flex justify-between items-center">
         <div>
           <h1 className="text-3xl flex">
@@ -21,12 +79,12 @@ export default function Dashboard({ uploads }: DashboardProps) {
           <p>Lista de vendas cadastradas</p>
         </div>
         <div>
-          {/* <Link href="/colaborators/create">
-            <button className="border-none px-4 py-2 rounded-xl cursor-pointer mx-1 mb-1 text-black bg-bluesx hover:brightness-75 transition-all duration-200 flex flex-row">
-              Cadastrar{" "}
-              <span className="hidden md:block ml-1">Colaborador</span>
-            </button>
-          </Link> */}
+          <button
+            className="border-none px-4 py-2 rounded-xl cursor-pointer mx-1 mb-1 text-white bg-blue-500 hover:brightness-75 transition-all duration-200 flex flex-row"
+            onClick={openModal}
+          >
+            Fazer <span className="hidden md:block ml-1">Upload</span>
+          </button>
         </div>
       </div>
 
@@ -36,14 +94,3 @@ export default function Dashboard({ uploads }: DashboardProps) {
     </Layout>
   );
 }
-
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const api = getAPIClient(ctx);
-  const uploads = await api.get<IApiResponse<IUpload[]>>("/uploads");
-
-  return {
-    props: {
-      uploads,
-    },
-  };
-};

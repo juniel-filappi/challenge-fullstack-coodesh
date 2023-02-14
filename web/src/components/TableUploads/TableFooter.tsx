@@ -19,8 +19,8 @@ const TableFooter = ({ range, setPage, page, slice }: TableFooterProps) => {
       {range.map((el, index) => (
         <button
           key={index}
-          className={`border-none px-3 py-2 rounded-xl cursor-pointer mx-1 mb-1 hover:bg-bluesx hover:text-white transition-all duration-200 ${
-            page === el ? `text-black bg-bluesx` : `text-white bg-black`
+          className={`border-none px-3 py-2 rounded-xl cursor-pointer mx-1 mb-1 hover:bg-blue-500 hover:text-white transition-all duration-200 ${
+            page === el ? `text-black bg-blue-500` : `text-white bg-black`
           }`}
           onClick={() => setPage(el)}
         >

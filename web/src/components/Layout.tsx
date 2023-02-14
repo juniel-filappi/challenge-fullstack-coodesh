@@ -8,10 +8,11 @@ interface LayoutProps {
 }
 
 export function Layout({ children, title }: LayoutProps) {
+  const titleWithPrefix = title ? `${title} - Coodesh` : "Coodesh";
   return (
     <>
       <Head>
-        <title>{title} - Coodesh</title>
+        <title>{titleWithPrefix}</title>
       </Head>
       <Header />
       <div className="p-8">{children}</div>

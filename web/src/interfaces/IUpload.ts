@@ -1,6 +1,10 @@
 export interface IUpload {
   id: string;
-  type: string;
+  type: {
+    id: string;
+    type: string;
+    description: string;
+  };
   date: string;
   product: string;
   value: string;

@@ -1,8 +1,9 @@
+import { formatCentsValueToPtBr, formatDateTimeToPtBr } from "@/helpers";
 import useTable from "@/hooks/useTable";
 import { IUpload } from "@/interfaces/IUpload";
 import { useState } from "react";
 import { IconButton } from "../IconButton";
-import TableFooter from "./TableFooter"
+import TableFooter from "./TableFooter";
 
 interface TableProps {
   data: IUpload[];
@@ -12,6 +13,8 @@ interface TableProps {
 export const TableUploads = ({ data, rowsPerPage }: TableProps) => {
   const [page, setPage] = useState(1);
   const { slice, range } = useTable(data, page, rowsPerPage);
+  const sumValues = data.reduce((acc, el) => acc + parseFloat(el.value), 0);
+
   return (
     <>
       <div className="overflow-x-auto relative rounded-md">
@@ -19,12 +22,11 @@ export const TableUploads = ({ data, rowsPerPage }: TableProps) => {
           <thead className="text-lg bg-gray-700 text-white">
             <tr>
               <th className="py-3 px-6"></th>
-              <th className="py-3 px-6">Código</th>
-              <th className="py-3 px-6">Nome</th>
-              <th className="py-3 px-6">CNPJ</th>
-              <th className="py-3 px-6">Email</th>
-              <th className="py-3 px-6">Telefone</th>
-              <th className="py-3 px-6">Endereço</th>
+              <th className="py-3 px-6">Tipo</th>
+              <th className="py-3 px-6">Data</th>
+              <th className="py-3 px-6">Produto</th>
+              <th className="py-3 px-6">Valor</th>
+              <th className="py-3 px-6">Vendedor</th>
             </tr>
           </thead>
           <tbody>
@@ -42,29 +44,29 @@ export const TableUploads = ({ data, rowsPerPage }: TableProps) => {
                   </IconButton> */}
                 </td>
                 <td className="py-4 px-6 font-medium whitespace-nowrap text-white">
-                  {/* {el.code} */}
+                  {el.type.description}
                 </td>
                 <td className="py-4 px-6 font-medium whitespace-nowrap text-white">
-                  {/* {el.name} */}
+                  {formatDateTimeToPtBr(el.date)}
                 </td>
                 <td className="py-4 px-6 font-medium whitespace-nowrap text-gray-400">
-                  {/* {setMaskCnpj(el.cnpj)} */}
+                  {el.product}
                 </td>
                 <td className="py-4 px-6 font-medium whitespace-nowrap text-gray-400">
-                  {/* {el.email} */}
+                  {formatCentsValueToPtBr(parseFloat(el.value))}
                 </td>
                 <td className="py-4 px-6 font-medium whitespace-nowrap text-gray-400">
-                  {/* {setMaskPhone(el.phone)} */}
-                </td>
-                <td className="py-4 px-6 font-medium whitespace-nowrap text-gray-400">
-                  {/* {el.address} */}
+                  {el.salesman}
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
+      <div className="flex justify-end pt-2">
+        <p>Total: <b>{formatCentsValueToPtBr(sumValues)}</b></p>
+      </div>
       <TableFooter range={range} slice={slice} setPage={setPage} page={page} />
     </>
-  )
-}
+  );
+};

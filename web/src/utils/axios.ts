@@ -28,10 +28,7 @@ export function getAPIClient(
     (config) => {
       const { "token": token } = parseCookies(ctx);
       if (token) {
-        config.params = {
-          ...config.params,
-          token,
-        };
+        config.headers.Authorization = `Bearer ${token}`;
       }
       return config;
     },

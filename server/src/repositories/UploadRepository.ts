@@ -2,38 +2,56 @@ import { prisma } from "../database/client";
 import { IOutput } from "../helpers";
 
 export class UploadRepository {
-  async saveFileUpload(file: IOutput, userId: number) {
+  async saveFileUpload(file: IOutput[], userId: number) {
     try {
-      const findType = await prisma.type.findFirstOrThrow({
+      file.forEach(async (line) => {
+        const type = await prisma.type.findFirstOrThrow({
+          where: {
+            type: line.type,
+          },
+        });
+
+        await prisma.upload.create({
+          data: {
+            type: {
+              connect: {
+                id: type.id,
+              },
+            },
+            date: line.date,
+            product: line.product,
+            value: line.value,
+            salesman: line.salesman,
+            user: {
+              connect: {
+                id: userId,
+              },
+            },
+          },
+        });
+      });
+
+      return true;
+    } catch (error: any) {
+      throw new Error(error);
+    }
+  }
+
+  async getUploads(userId: number) {
+    try {
+      const uploads = await prisma.upload.findMany({
         where: {
-          type: file.type,
+          user_id: userId,
+        },
+        include: {
+          type: true,
+        },
+        orderBy: {
+          date: "desc",
         },
       });
 
-      if (!findType) {
-        throw new Error("Type not found");
-      }
-
-      const upload = await prisma.upload.create({
-        data: {
-          date: file.date,
-          product: file.product,
-          value: file.value,
-          salesman: file.salesman,
-          type: {
-            connect: {
-              id: findType.id,
-            },
-          },
-          user: {
-            connect: {
-              id: userId,
-            },
-          },
-        },
-      });
-
-      return upload;
+      return uploads;
     } catch (error: any) {
       throw new Error(error);
     }
