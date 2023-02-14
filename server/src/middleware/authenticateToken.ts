@@ -13,7 +13,7 @@ export function authenticateToken(
   const authHeader = req.headers.authorization;
 
   if (!authHeader) {
-    throw new Error("Token missing");
+    return res.status(401).end();
   }
 
   // Bearer token
@@ -25,6 +25,6 @@ export function authenticateToken(
 
     return next();
   } catch (error) {
-    return next(error);
+    return res.status(401).end();
   }
 }

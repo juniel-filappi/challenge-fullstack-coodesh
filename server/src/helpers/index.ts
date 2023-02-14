@@ -61,7 +61,7 @@ export function readFileAndSave(read: ReadStream): Promise<IOutput[]> {
     const lines = allFileContents.split(/\r?\n/);
     const linesToSave = lines
       .map((line) => {
-        if (!line.length) {
+        if (line.length) {
           const output = getSlices(line);
 
           return output;

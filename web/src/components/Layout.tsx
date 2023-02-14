@@ -1,6 +1,6 @@
 import Head from "next/head";
 import { ReactElement } from "react";
-import { Header } from "./Header";
+import { HeaderDashboard } from "./HeaderDashboard";
 
 interface LayoutProps {
   title: string;
@@ -14,7 +14,7 @@ export function Layout({ children, title }: LayoutProps) {
       <Head>
         <title>{titleWithPrefix}</title>
       </Head>
-      <Header />
+      <HeaderDashboard />
       <div className="p-8">{children}</div>
     </>
   );

@@ -1,6 +1,7 @@
 import axios from "axios";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
+import nookies from "nookies";
 
 const MySwal = withReactContent(Swal);
 
@@ -11,6 +12,10 @@ const showModal = (title: string, html?: string) =>
 
 export const handleError = (err: unknown, alternativeMessage: string) => {
   if (axios.isAxiosError(err)) {
+    if (err.response?.status === 401) {
+      nookies.destroy(null, "token");
+      window.location.replace("/login");
+    }
     if (err.code && timeoutErrors.includes(err.code)) {
       showModal(
         "Conexão ruim ou inexistente",

@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 
 export default function Dashboard() {
   const [uploads, setUploads] = useState<IUpload[]>([]);
-  const [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(false);
   const [file, setFile] = useState<FileList | null>(null);
 
   useEffect(() => {
@@ -29,6 +29,7 @@ export default function Dashboard() {
     setIsOpen(false);
   };
   const openModal = () => {
+    setFile(null);
     setIsOpen(true);
   };
 
@@ -42,9 +43,11 @@ export default function Dashboard() {
       if (request) {
         closeModal();
         handleSuccess("Upload realizado com sucesso");
-        // refresh data 
-        const request = await getUploads();
-        setUploads(request.payload);
+        // refresh data
+        setTimeout(async () => {
+          const request = await getUploads();
+          setUploads(request.payload);
+        }, 1000);
       }
     } catch (error) {
       handleError(error, "Erro ao fazer upload do arquivo");
@@ -54,7 +57,7 @@ export default function Dashboard() {
   return (
     <Layout title="Dashboard">
       <Modal header="Upload de Vendas" isOpen={isOpen} onClose={closeModal}>
-        <div className="mt-10 flex flex-col"> 
+        <div className="mt-10 flex flex-col">
           <input
             type="file"
             accept=".txt"
