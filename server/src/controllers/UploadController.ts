@@ -1,33 +1,33 @@
 import { NextFunction, Request, Response } from "express";
 import { createReadStream } from "fs";
 import readLine from "readline";
-import { getSlices, IOutput } from "../helpers";
 
+import { getSlices } from "../helpers";
+import { apiMessage } from "../helpers/apiMessage";
+import { UploadRepository } from "../repositories/UploadRepository";
 import { validateUpload } from "../validations/uploadValidator";
 
 export class UploadController {
   async upload(req: Request, res: Response, next: NextFunction) {
     try {
       const { file } = validateUpload.parse(req.files);
+      const uploadRepository = new UploadRepository();
 
       file.mv(`./uploads/${file.name}`);
       const read = createReadStream(`./uploads/${file.name}`);
 
-      const teste = readLine.createInterface({
-        input: read,
-        crlfDelay: Infinity,
-      });
-      const fileFormated = [] as IOutput[];
+      readLine
+        .createInterface({
+          input: read,
+          crlfDelay: Infinity,
+        })
+        .on("line", async (line) => {
+          if (line.length) {
+            await uploadRepository.saveFileUpload(getSlices(line), req.user_id);
+          }
+        });
 
-      // eslint-disable-next-line no-restricted-syntax
-      for await (const line of teste) {
-        if (line.length) {
-          fileFormated.push(getSlices(line));
-        }
-      }
-
-      console.log((parseFloat(fileFormated[0].value) / 100).toLocaleString("pt-BR", { style: "currency", currency: "BRL" }));
-      return res.send(fileFormated);
+      return res.send(apiMessage(true, 201, "Arquivo enviado com sucesso"));
     } catch (error) {
       return next(error);
     }

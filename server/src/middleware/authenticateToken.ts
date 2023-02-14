@@ -1,8 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { verify } from "jsonwebtoken";
 
-import { apiMessage } from "../helpers/apiMessage";
-
 interface IPayload {
   sub: string;
 }
@@ -23,7 +21,7 @@ export function authenticateToken(
   try {
     const { sub } = verify(token, process.env.JWT_SECRET!) as IPayload;
 
-    req.user_id = sub;
+    req.user_id = parseInt(sub, 10);
 
     return next();
   } catch (error) {
