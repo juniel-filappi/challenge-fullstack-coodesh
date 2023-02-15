@@ -1,7 +1,7 @@
 import { prisma } from "../database/client";
 import { IOutput } from "../helpers";
 
-export class UploadRepository {
+export class SaleRepository {
   async saveFileUpload(file: IOutput[], userId: number) {
     try {
       file.forEach(async (line) => {
@@ -11,7 +11,7 @@ export class UploadRepository {
           },
         });
 
-        await prisma.upload.create({
+        await prisma.sale.create({
           data: {
             type: {
               connect: {
@@ -37,9 +37,9 @@ export class UploadRepository {
     }
   }
 
-  async getUploads(userId: number) {
+  async getSales(userId: number) {
     try {
-      const uploads = await prisma.upload.findMany({
+      const sales = await prisma.sale.findMany({
         where: {
           user_id: userId,
         },
@@ -51,7 +51,29 @@ export class UploadRepository {
         },
       });
 
-      return uploads;
+      return sales;
+    } catch (error: any) {
+      throw new Error(error);
+    }
+  }
+
+  async deleteSale(saleId: number) {
+    try {
+      const findSale = await prisma.sale.findFirst({
+        where: {
+          id: saleId,
+        },
+      });
+
+      if (!findSale) {
+        throw new Error("Venda não encontrada");
+      }
+
+      await prisma.sale.delete({
+        where: {
+          id: findSale.id,
+        },
+      });
     } catch (error: any) {
       throw new Error(error);
     }

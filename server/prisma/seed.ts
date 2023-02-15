@@ -12,6 +12,12 @@ const types = [
 
 async function run() {
   await Promise.all([
+    prisma.user.deleteMany({}),
+    prisma.type.deleteMany({}),
+    prisma.sale.deleteMany({}),
+  ]);
+
+  await Promise.all([
     prisma.user.create({
       data: {
         name: "Alice",
@@ -20,13 +26,9 @@ async function run() {
       },
     }),
 
-    types.map(async (type) => {
-      await prisma.type.create({
-        data: {
-          ...type,
-        },
-      });
-    }),
+    prisma.type.createMany({
+      data: types,
+    })
   ]);
 }
 

@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
-import { IUpload } from "../../interfaces/IUpload";
+import { ISale } from "../../interfaces/ISale";
 
 interface TableFooterProps {
   range: number[];
   setPage: (page: number) => void;
   page: number;
-  slice: IUpload[];
+  slice: ISale[];
 }
 
 const TableFooter = ({ range, setPage, page, slice }: TableFooterProps) => {

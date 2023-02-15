@@ -125,7 +125,7 @@ Feito para criar funcões que possam ser usadas mais de uma vez no código e tam
 - [x] Create `Middleware` authenticate.
 - [x] Implementing tratative errors.
 - [x] Use the default response api.
-- [ ] Create upload route.
+- [x] Create sale routes.
 - [ ] Create `swagger` documentation.
 - [x] Create unit tests.
 
@@ -133,7 +133,7 @@ Feito para criar funcões que possam ser usadas mais de uma vez no código e tam
 #### TO DO WEB
 - [x] Create Login page.
 - [x] Create Register page.
-- [x] Create Upload page.
+- [x] Create Dashboard page.
 - [x] Configure `cypress` and automatized tests.
 - [x] Create middleware authenticate private routes.
 - [x] Adding `sweet-alert2` for return messages in application.

@@ -14,7 +14,7 @@ export default function Home() {
 
       <main className="flex justify-center">
         <div className="flex flex-col items-center mt-14">
-          <h1 className="text-6xl font-bold mt-8">
+          <h1 className="text-6xl font-bold mt-8" data-cy="text-welcome">
             Bem vindo ao sistema da Coodesh
           </h1>
           <p className=" px-2">
@@ -26,7 +26,7 @@ export default function Home() {
           </h3>
 
           <div className="mt-5">
-            <Link href="/login" className="bg-blue-500 py-2 px-4 rounded text-white hover:brightness-90 transition-all duration-150" > Acessar </Link>
+            <Link href="/login" className="bg-blue-500 py-2 px-4 rounded text-white hover:brightness-90 transition-all duration-150" data-cy="button-login"> Acessar </Link>
           </div>
         </div>
       </main>

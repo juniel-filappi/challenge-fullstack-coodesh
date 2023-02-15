@@ -1,16 +1,18 @@
 import { formatCentsValueToPtBr, formatDateTimeToPtBr } from "@/helpers";
 import useTable from "@/hooks/useTable";
-import { IUpload } from "@/interfaces/IUpload";
+import { ISale } from "@/interfaces/ISale";
 import { useState } from "react";
 import { IconButton } from "../IconButton";
+import { TrashIcon } from "../TrashIcon";
 import TableFooter from "./TableFooter";
 
 interface TableProps {
-  data: IUpload[];
+  data: ISale[];
   rowsPerPage: number;
+  onDeleteSale: (saleId: string) => void;
 }
 
-export const TableUploads = ({ data, rowsPerPage }: TableProps) => {
+export const TableUploads = ({ data, rowsPerPage, onDeleteSale }: TableProps) => {
   const [page, setPage] = useState(1);
   const { slice, range } = useTable(data, page, rowsPerPage);
   const sumValues = data.reduce((acc, el) => acc + parseFloat(el.value), 0);
@@ -18,7 +20,7 @@ export const TableUploads = ({ data, rowsPerPage }: TableProps) => {
   return (
     <>
       <div className="overflow-x-auto relative rounded-md">
-        <table className="w-full text-md text-center text-white">
+        <table data-cy="dashboard-table" className="w-full text-md text-center text-white">
           <thead className="text-lg bg-gray-700 text-white">
             <tr>
               <th className="py-3 px-6"></th>
@@ -33,15 +35,13 @@ export const TableUploads = ({ data, rowsPerPage }: TableProps) => {
             {slice.map((el) => (
               <tr key={el.id} className="border-b bg-black border-gray-700">
                 <td className="py-4 px-6 font-medium whitespace-nowrap text-white">
-                  {/* <IconButton onClick={() => handleEditCompany(el.id)}>
-                    <BiPencil />
-                  </IconButton>
                   <IconButton
                     className="ml-2 hover:bg-red-500"
-                    onClick={() => handleDeleteCompany(el.id)}
+                    dataCy="dashboard-button-delete-sale"
+                    onClick={() => onDeleteSale(el.id)}
                   >
-                    <BiTrash />
-                  </IconButton> */}
+                    <TrashIcon />
+                  </IconButton>
                 </td>
                 <td className="py-4 px-6 font-medium whitespace-nowrap text-white">
                   {el.type.description}

@@ -1,4 +1,4 @@
-export interface IUpload {
+export interface ISale {
   id: string;
   type: {
     id: string;

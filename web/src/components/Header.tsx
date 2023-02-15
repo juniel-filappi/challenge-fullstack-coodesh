@@ -9,7 +9,7 @@ export function Header() {
       <div className="w-full flex justify-between items-center py-4 px-2">
         <div className="flex items-center">
           <h1 className="ml-2 text-2xl font-bold">
-            <Image src={logoImage} alt="Logo" />
+            <Image src={logoImage} alt="Logo" data-cy="image-logo-header" />
           </h1>
         </div>
         <div className="flex items-center">

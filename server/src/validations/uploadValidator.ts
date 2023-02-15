@@ -36,3 +36,10 @@ export const validateUploadSlices = z.object({
   value: z.string().max(10),
   salesman: z.string().max(20),
 });
+
+export const validateDeleteSale = z.object({
+  id: z.string({
+    required_error: "id obrigatório",
+    invalid_type_error: "id deve ser uma string"
+  })
+});

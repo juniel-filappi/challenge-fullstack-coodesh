@@ -37,7 +37,7 @@ export function HeaderDashboard() {
         </div>
         <div className="flex items-center">
           {user?.name}
-          <button className="px-5 text-red-500" onClick={handleLogout}>
+          <button data-cy="dashboard-button-logout" className="px-5 text-red-500" onClick={handleLogout}>
             Sair
           </button>
         </div>
