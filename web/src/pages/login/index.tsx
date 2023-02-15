@@ -37,7 +37,7 @@ export default function Login() {
     <>
       <Head>
         <title>Login</title>
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/favicon.png" />
       </Head>
 
       <Header />

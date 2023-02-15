@@ -27,6 +27,8 @@ O desafio consiste em construir uma interface web que possibilite o upload de um
 de transações de produtos vendidos, normalizar os dados e armazená-los em um
 banco de dados relacional.
 
+- link da apresentação [Loom](https://www.loom.com/embed/2930c8c3a4ae4797a16271af8f147983)
+
 ---
 
 ## 👨‍💻 Tecnologias Utilizadas

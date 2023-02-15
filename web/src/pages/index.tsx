@@ -7,7 +7,7 @@ export default function Home() {
     <>
      <Head>
         <title>Welcome to the challange</title>
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/favicon.png" />
       </Head>
 
       <Header />
