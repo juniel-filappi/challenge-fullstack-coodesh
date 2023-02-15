@@ -3,7 +3,7 @@
 <h1 align="center">
     <img alt="Logo" src="./logo.svg" height="50px" />
     <br/>
-   <a href="https://nodejs.org" target="_blank" rel="noopener">Node.JS</a> | <a href="https://reactjs.org/" target="_blank" rel="noopener">Ract.JS</a> 
+   <a href="https://nodejs.org" target="_blank" rel="noopener">Node.JS</a> | <a href="https://nextjs.org/" target="_blank" rel="noopener">Next.JS</a> 
 </h1>
 
 <p align="center">
@@ -31,12 +31,12 @@ banco de dados relacional.
 
 ## 👨‍💻 Tecnologias Utilizadas
 
-- <a href="https://nodejs.org" target="_blank" rel="noopener">Node.JS</a>;
-- <a href="https://reactjs.org/" target="_blank" rel="noopener">React.JS</a>;
+- <a href="https://nodejs.org" target="_blank" rel="noopener">Node.Js</a>;
+- <a href="https://reactjs.org/" target="_blank" rel="noopener">React.Js</a>;
 - <a href="https://www.typescriptlang.org/" target="_blank" rel="noopener">TypeScript</a>.
-- <a href="https://nextjs.org/" target="_blank" rel="noopener">Next.JS</a>.
+- <a href="https://nextjs.org/" target="_blank" rel="noopener">Next.Js</a>.
 - <a href="https://www.prisma.io/" target="_blank" rel="noopener">Prisma 10</a>.
-- <a href="https://expressjs.com/" target="_blank" rel="noopener">Express.JS</a>.
+- <a href="https://expressjs.com/" target="_blank" rel="noopener">Express.Js</a>.
 - <a href="https://www.cypress.io/" target="_blank" rel="noopener">Cypress</a>.
 
 ---
@@ -50,6 +50,7 @@ Para conseguir utilizar o projeto e contribuir nele, basta seguir as instruçõe
 - O **<a href="https://nodejs.org/en/" target="_blank" rel="noopener">Node.js</a>** é **OBRIGATÓRIO** para executar esse projeto e é **RECOMENDADO** usar a versão LTS.
 - O **<a href="https://www.npmjs.com/" target="_blank" rel="noopener">NPM</a>** ou **<a href="https://yarnpkg.com/" target="_blank" rel="noopener">Yarn</a>** são **OBRIGATÓRIO** para o gerenciamento dos pacotes da aplicação.
 - O **<a href="https://git-scm.com/" target="_blank" rel="noopener">Git</a>** é **OBRIGATÓRIO** para o controle de versão do projeto.
+- O **MySQL** é **OBRIGATÓRIO** para o funcionamento da aplicação.
 
 ---
 
@@ -66,17 +67,34 @@ Primeiro clone o repositório em seu computador, por meio do terminal utilizando
   $ cd challenge-fullstack-coodesh
 ```
 
-2. Iniciando o Projeto
+2. Criando arquivo `.env` e `.env.local`
+- Começe criando um arquivo `.env` dentro do diretório do servidor e cole as seguintes variáveis:
+- Utilize [HMAC Generator](https://codebeautify.org/hmac-generator) caso seja necessário.
+```js
+DATABASE_URL="mysql://user:password@localhost:3306/databasename"
+JWT_SECRET="yourHMACgenerate"
+```
+- Crie um arquivo `.env.local` dentro do diretório do front e cole a seguinte variável:
+```js
+NEXT_PUBLIC_API_URL="http://localhost:3333"
+```
+
+3. Iniciando o Projeto
+- Após configurado a etapa anterior, basta executar os seguintes comandos:
 
 ```sh
+  # Instale as dependências do servidor
+  $ cd server && yarn # ou npm install
+  # Execute o comando abaixo para criar as tabelas do banco de dados
+  $ yarn prisma migrate dev
+  # Execute o comando abaixo para seedar o banco de dados
+  $ yarn seed
+  # Execute o comando abaixo para iniciar o servidor
+  $ yarn dev
+
   # Instale as dependências da aplicação web
   $ cd web && yarn # ou npm install
   # Execute o comando abaixo para iniciar o projeto
-  $ yarn dev
-
-  # Instale as dependências da aplicação api
-  $ cd server && yarn # ou npm install
-  # Execute o comando abaixo para iniciar o servidor
   $ yarn dev
 ```
 ---
@@ -117,7 +135,7 @@ Feito para criar funcões que possam ser usadas mais de uma vez no código e tam
 ---
 ### 🚧 Lista de Atividades
 
-#### TO DO API
+#### TO DO SERVER
 - [x] Adding ORM `Prisma 10`.
 - [x] Create `Repository Pattern` module.
 - [x] Use `SOLID` Arquiteture.
@@ -125,9 +143,9 @@ Feito para criar funcões que possam ser usadas mais de uma vez no código e tam
 - [x] Create `Middleware` authenticate.
 - [x] Implementing tratative errors.
 - [x] Use the default response api.
-- [x] Create sale routes.
-- [ ] Create `swagger` documentation.
+- [x] Create sales routes.
 - [x] Create unit tests.
+- [ ] Create `swagger` documentation.
 
 
 #### TO DO WEB
