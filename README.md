@@ -1,4 +1,4 @@
-# 🗺 Desafio "Fullstack Afiliados"
+# 🗺 Project TransactiWeb
 
 <h1 align="center">
     <img alt="Logo" src="./logo.svg" height="50px" />
@@ -23,7 +23,7 @@
 
 ## 💭 Sobre
 
-O desafio consiste em construir uma interface web que possibilite o upload de um arquivo
+O código consiste em construir uma interface web que possibilite o upload de um arquivo
 de transações de produtos vendidos, normalizar os dados e armazená-los em um
 banco de dados relacional.
 
